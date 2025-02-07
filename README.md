@@ -4,14 +4,13 @@
 1. [Description](#description)
 2. [Architecture](#architecture)
 3. [Assistant API Workflow](#assistant-api-workflow)
-4. [Workflow](#workflow)
-5. [Flowchart](#flowchart)
-6. [Technologies Used](#technologies-used)
-7. [Configuration](#configuration)
-8. [Local Installation Using Docker Compose](#local-installation-using-docker-compose)
-9. [Stopping the Application](#stopping-the-application)
-10. [Deployment](#deployment)
-11. [Enhancements](#enhancements)
+4. [System Components Request Flow](#system-components-request-flow)
+5. [Technologies Used](#technologies-used)
+6. [Configuration](#configuration)
+7. [Local Installation Using Docker Compose](#local-installation-using-docker-compose)
+8. [Stopping the Application](#stopping-the-application)
+9. [Deployment](#deployment)
+10. [Enhancements](#enhancements)
 
 ## Description
 This project is a chatbot application utilizing the assistant feature provided by OpenAI using either **OpenAI's platform** ([docs](https://platform.openai.com/docs/assistants/overview)) or **Azure OpenAI** ([docs](https://learn.microsoft.com/en-us/azure/ai-services/openai/how-to/assistant)). The chatbot uses the Assistant API with **function calling** capabilities to enable basic chat functionality. If the bot cannot answer a user’s query, it searches the internet for relevant information.
