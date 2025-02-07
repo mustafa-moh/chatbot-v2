@@ -14,7 +14,7 @@
 11. [Enhancements](#enhancements)
 
 ## Description
-This project is a chatbot application utilizing the assistant feature provided by OpenAI using either OpenAI's platform ([docs](https://platform.openai.com/docs/assistants/overview)) or Azure OpenAI ([docs](https://learn.microsoft.com/en-us/azure/ai-services/openai/how-to/assistant)). The chatbot uses the Assistant API with **function calling** capabilities to enable basic chat functionality. If the bot cannot answer a user’s query, it searches the internet for relevant information.
+This project is a chatbot application utilizing the assistant feature provided by OpenAI using either **OpenAI's platform** ([docs](https://platform.openai.com/docs/assistants/overview)) or **Azure OpenAI** ([docs](https://learn.microsoft.com/en-us/azure/ai-services/openai/how-to/assistant)). The chatbot uses the Assistant API with **function calling** capabilities to enable basic chat functionality. If the bot cannot answer a user’s query, it searches the internet for relevant information.
 
 ## Architecture
 The application consists of the following components:
@@ -35,7 +35,7 @@ graph TD;
     Frontend -->|Displays response| User;
 ```
 ## Assistant API Workflow
-Here is how the app utilize the assistant api workflow
+This section outlines the interaction workflow between the Assistant API and the application service, detailing how the application server manages remote function calls through the Assistant API.
 
 ```mermaid
 sequenceDiagram
@@ -43,18 +43,21 @@ sequenceDiagram
     participant Assistant
     participant Redis
 
-    Backend ->> Assistant: Initialize thread
+    Backend ->> Backend: Check current session has thread_id OR init new one
+    Backend ->> Assistant: Initialize new thread
+    Assistant -->> Backend: Return thread ID 
+    Backend ->> Redis: Store thread ID in current session
     Backend ->> Assistant: Add message to thread
     Backend ->> Assistant: Create run
     Assistant -->> Backend: Run status = in_progress
     Backend -->> Assistant: Polling run status
     Assistant -->> Backend: Run status = requires_action (if needed)
-    Backend ->> Redis: Store thread ID
-    Backend ->> Assistant: Execute function call
+    Backend ->> Backend: Execute search_internet function call and get results
+    Backend ->> Assistant: Send function call results
     Assistant -->> Backend: Return processed response
 ```
 
-## Workflow
+## System Components Request Flow
 
 ```mermaid
 sequenceDiagram
