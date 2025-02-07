@@ -5,6 +5,7 @@ load_dotenv()
 
 
 class Config:
+    OPENAI_DRIVER = os.getenv("OPENAI_DRIVER", "openai")
     MONGO_URI = os.getenv("MONGO_URI", "mongodb://localhost:27017/ai_assistant")
     REDIS_URL = os.getenv("REDIS_URL", "redis://localhost:6379/0")
     AZURE_OPENAI_ENDPOINT = os.getenv("AZURE_OPENAI_ENDPOINT")

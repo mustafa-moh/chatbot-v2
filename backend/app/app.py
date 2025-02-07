@@ -1,26 +1,20 @@
 from flask import Flask, request, jsonify
-from pymongo import MongoClient
 
+from app.models import save_chat_log
 from app.services.assistant_service import AssistantService
 from app.services.factories.ai_factory import AIFactory
 from app.services.factories.search_factory import SearchFactory
 from app.utils.session_manager import get_session_id, get_session_thread, get_current_session_id, set_session_thread
 from config import Config
-from datetime import datetime
 from flask_cors import CORS
 
 app = Flask(__name__)
 CORS(app)
 
 # Initialize services using factories
-ai_service = AIFactory.create_ai_service("openai")
+ai_service = AIFactory.create_ai_service(Config.OPENAI_DRIVER)
 search_service = SearchFactory.create_search_service("google")
 assistant_service = AssistantService(ai_service, search_service)
-
-# Initialize MongoDB
-#client = MongoClient(Config.MONGO_URI)
-#db = client.get_database()
-#chat_logs = db.chat_logs
 
 
 @app.before_request
@@ -45,12 +39,7 @@ def chat():
     ai_response = assistant_service.get_response(thread_id=thread_id, run_id=run_id)
 
     # Log conversation to MongoDB
-    # chat_logs.insert_one({
-    #     "session_id": get_current_session_id(),
-    #     "timestamp": datetime.now(),
-    #     "user_message": prompt,
-    #     "ai_response": response_txt
-    # })
+    save_chat_log(session_id=get_current_session_id(), thread_id=thread_id, prompt=prompt, ai_response=ai_response)
 
     return jsonify({
         "response": ai_response,
