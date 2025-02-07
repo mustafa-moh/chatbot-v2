@@ -6,7 +6,7 @@
 3. [Assistant API Workflow](#assistant-api-workflow)
 4. [System Components Request Flow](#system-components-request-flow)
 5. [Technologies Used](#technologies-used)
-6. [Configuration](#configuration)
+6. [Configuration and Prerequisites](#configuration-and-prerequisites)
 7. [Local Installation Using Docker Compose](#local-installation-using-docker-compose)
 8. [Stopping the Application](#stopping-the-application)
 9. [Deployment](#deployment)
@@ -84,19 +84,41 @@ sequenceDiagram
 - OpenAI Assistant API
 - Google Search API
 
-## Configuration
-Set up your environment variables in `.env`:
+## Configuration and Prerequisites  
 
-```ini
-AZURE_OPENAI_ENDPOINT="" # Required for Azure OpenAI driver
-AZURE_OPENAI_API_KEY="" # Required for Azure OpenAI driver
-OPENAI_ASSISTANT_ID=""
-OPENAI_API_KEY="" # Required for OpenAI driver
-GOOGLE_SEARCH_API_KEY=""
-GOOGLE_SEARCH_CX=""
-```
+Before setting up the application, ensure you have the following:  
 
-This ensures that the chatbot retains context for each user session.
+1. **Select an AI Driver**  
+   - Decide whether to use OpenAI directly or Azure OpenAI.  
+   - Set the `OPENAI_DRIVER` variable in the `.env` file to either `openai` or `azure-openai`.  
+
+2. **Create an Assistant**  
+   - Run the `create_assistant.py` script to generate an assistant.  
+   - The script outputs an `assistant_id`.  
+
+3. **Update Configuration**  
+   - Set `OPENAI_ASSISTANT_ID` in the `.env` file using the generated `assistant_id`.  
+
+4. **Environment Variables**
+   - All environment variables located on `.env.example`
+   - Ensure the required API keys are configured in `.env` before start the application:  
+
+   ```ini
+   # OpenAI driver: 'openai' or 'azure-openai'
+    OPENAI_DRIVER=""
+
+    # Azure config: Required for Azure OpenAI driver
+    AZURE_OPENAI_ENDPOINT=""
+    AZURE_OPENAI_API_KEY=""
+    
+    OPENAI_ASSISTANT_ID="this is required for both drivers"
+    
+    # OpenAI config: Required for 'openai' driver
+    OPENAI_API_KEY=""
+    
+    # Google search credentials
+    GOOGLE_SEARCH_API_KEY=""
+    GOOGLE_SEARCH_CX=""
 
 ## Local Installation Using Docker Compose
 
