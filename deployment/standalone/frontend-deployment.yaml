@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: frontend
-        image: your-frontend-image:dev
+        image: {app-image-uri}
         ports:
         - containerPort: 3000
         env:
@@ -30,6 +30,8 @@ kind: Service
 metadata:
   name: frontend
   namespace: chatbot-dev
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-scheme: internet-facing
 spec:
   selector:
     app: frontend

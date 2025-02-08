@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: chatbot-app
-        image: your-chatbot-app-image:dev
+        image: {app-image-uri}
         ports:
         - containerPort: 5000
         envFrom:
@@ -32,6 +32,9 @@ kind: Service
 metadata:
   name: chatbot-app
   namespace: chatbot-dev
+  annotations:
+    # aws annotations
+    service.beta.kubernetes.io/aws-load-balancer-scheme: internet-facing
 spec:
   selector:
     app: chatbot-app

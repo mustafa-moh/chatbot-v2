@@ -9,11 +9,11 @@ AWS_ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
 case "$1" in
   "dev")
     ENV="dev"
-    API_URL="http://chatbot-app.chatbot-dev.svc.cluster.local"
+    API_URL="{app-server-url}/api/chat"
     ;;
   "prod")
     ENV="prod"
-    API_URL="http://chatbot-app.chatbot-prod.svc.cluster.local"
+    API_URL="{app-server-url}/api/chat"
     ;;
   *)
     echo "Usage: $0 {dev|prod}"
@@ -30,7 +30,12 @@ echo "Building and pushing frontend image for ${ENV} environment..."
 aws ecr get-login-password --region ${AWS_REGION} | docker login --username AWS --password-stdin ${ECR_REPO_URI}
 
 # Build the Docker image
-docker build -f $(pwd)/../../frontend/Dockerfile -t ${ECR_REPO_NAME} $(pwd)/../../frontend
+docker build \
+  --build-arg REACT_APP_API_URL="${API_URL}" \
+  -f ../../frontend/Dockerfile \
+  -t "${ECR_REPO_NAME}" \
+  ../../frontend
+
 IMAGE_TAG="latest"
 
 docker tag ${ECR_REPO_NAME}:${IMAGE_TAG} ${ECR_REPO_URI}:${IMAGE_TAG}

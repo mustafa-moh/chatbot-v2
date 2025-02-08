@@ -10,6 +10,8 @@
 7. [Local Installation Using Docker Compose](#local-installation-using-docker-compose)
 8. [Stopping the Application](#stopping-the-application)
 9. [Deployment](#deployment)
+   1. [Standalone Deployment](#standalone-deployment)
+   2. [High Availability Deployment](#high-availability-deployment)
 10. [Enhancements](#enhancements)
 
 ## Description
@@ -181,7 +183,19 @@ This will shut down all services and remove associated containers.
 
 
 ## Deployment
-will add it later
+There are two deployment options: a standalone deployment, suitable for small environments like development and staging, and a high-availability deployment, which should be used for production.
+
+### Standalone Deployment
+1. Navigate to `deployment/standalone`
+2. Build Frontend: Run `./build-front.sh dev` to build and push the frontend-app image to AWS ECR. You can modify the command to use any container registry of your choice.
+3. Build Backend: Run `./build-backend.sh dev` to build and push the frontend-app image to AWS ECR. You can modify the command to use any container registry of your choice.
+4. Update the placeholder `{app-image-uri}` in `app-deplyment.yaml`, and `frontend-deployment.yaml` with image uri and tag created on the prev steps for both apps. here is an example of image uri with tag of the frontend app `{aws-account-id}.dkr.ecr.us-east-1.amazonaws.com/chatbot/frontend:latest`
+5. Crete the kubernetes cluster if not exist. or use the following command to create K8S cluster on AWS with the auto mode `eksctl create cluster --name=chatbot --enable-auto-mode`
+6. Run `./deploy.sh` command to start provision all required resources.
+7. Finally get available service urls using `kubectl get services -n chatbot-dev`
+8. Note: All K8S resources will be created under namespace `chatbot-dev`, you can manage it from the .yaml files in the `deployment/standalone` folder.
+
+### High Availability Deployment
 
 ## Enhancements
 will add it later
