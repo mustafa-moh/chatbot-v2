@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: chatbot-app
+  namespace: chatbot-dev
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: chatbot-app
+  template:
+    metadata:
+      labels:
+        app: chatbot-app
+    spec:
+      containers:
+      - name: chatbot-app
+        image: your-chatbot-app-image:dev
+        ports:
+        - containerPort: 5000
+        envFrom:
+        - secretRef:
+            name: app-secrets
+        - configMapRef:
+            name: app-config
+        imagePullPolicy: Always
+
+---
+# Application Server Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: chatbot-app
+  namespace: chatbot-dev
+spec:
+  selector:
+    app: chatbot-app
+  ports:
+  - port: 80
+    targetPort: 5000
+  type: LoadBalancer

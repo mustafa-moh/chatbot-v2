@@ -1,0 +1,5 @@
+# Namespace for Development
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: chatbot-dev
