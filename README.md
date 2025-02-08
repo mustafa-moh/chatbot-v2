@@ -183,7 +183,9 @@ This will shut down all services and remove associated containers.
 
 
 ## Deployment
-There are two deployment options: a standalone deployment, suitable for small environments like development and staging, and a high-availability deployment, which should be used for production.
+There are two deployment options: 
+- **Standalone deployment:** suitable for small environments like development and staging.
+- **High-availability deployment:** which should be used for production.
 
 ### Standalone Deployment
 1. Navigate to `deployment/standalone`
