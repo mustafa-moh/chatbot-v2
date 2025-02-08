@@ -193,9 +193,10 @@ There are two deployment options:
 3. Build Backend: Run `./build-backend.sh dev` to build and push the frontend-app image to AWS ECR. You can modify the command to use any container registry of your choice.
 4. Update the placeholder `{app-image-uri}` in `app-deplyment.yaml`, and `frontend-deployment.yaml` with image uri and tag created on the prev steps for both apps. here is an example of image uri with tag of the frontend app `{aws-account-id}.dkr.ecr.us-east-1.amazonaws.com/chatbot/frontend:latest`
 5. Crete the kubernetes cluster if not exist. or use the following command to create K8S cluster on AWS with the auto mode `eksctl create cluster --name=chatbot --enable-auto-mode`
-6. Run `./deploy.sh` command to start provision all required resources.
-7. Finally get available service urls using `kubectl get services -n chatbot-dev`
-8. Note: All K8S resources will be created under namespace `chatbot-dev`, you can manage it from the .yaml files in the `deployment/standalone` folder.
+6. Review the secrets in the `secrets.yaml` and update all placeholders with actual env variables.
+7. Run `./deploy.sh` command to start provision all required resources.
+8. Finally get available service urls using `kubectl get services -n chatbot-dev`
+9. Note: All K8S resources will be created under namespace `chatbot-dev`, you can manage it from the .yaml files in the `deployment/standalone` folder.
 
 ### High Availability Deployment
 

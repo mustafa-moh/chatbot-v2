@@ -1,0 +1,21 @@
+architecture: replication
+auth:
+  enabled: false
+
+replica:
+  replicaCount: 2
+
+sentinel:
+  enabled: true
+
+persistence:
+  enabled: true
+  size: 8Gi
+
+resources:
+  limits:
+    cpu: 2
+    memory: 4Gi
+  requests:
+    cpu: 1
+    memory: 2Gi
