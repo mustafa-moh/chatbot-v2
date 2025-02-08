@@ -4,3 +4,4 @@
 /backend/.idea/
 /backend/.venv/
 /.env
+/deployment/.idea/
