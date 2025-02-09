@@ -18,8 +18,7 @@
 ## Description
 
 This project is a chatbot application utilizing the assistant feature provided by OpenAI using either **OpenAI's
-platform** ([docs](https://platform.openai.com/docs/assistants/overview)) or **Azure OpenAI
-** ([docs](https://learn.microsoft.com/en-us/azure/ai-services/openai/how-to/assistant)). The chatbot uses the Assistant
+platform** ([docs](https://platform.openai.com/docs/assistants/overview)) or **Azure OpenAI** ([docs](https://learn.microsoft.com/en-us/azure/ai-services/openai/how-to/assistant)). The chatbot uses the Assistant
 API with **function calling** capabilities to enable basic chat functionality. If the bot cannot answer a user’s query,
 it searches the internet for relevant information.
 
