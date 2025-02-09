@@ -197,6 +197,9 @@ This will shut down all services and remove associated containers.
 
 ## Deployment
 
+The deployment platform is **Kubernetes**, and all deployment scripts have been tested on **AWS EKS** with **Auto** mode
+enabled.
+
 There are two deployment options:
 
 - **Standalone deployment:** suitable for small environments like development and staging.
