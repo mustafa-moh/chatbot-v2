@@ -94,9 +94,11 @@ Before setting up the application, ensure you have the following:
    - Decide whether to use OpenAI directly or Azure OpenAI.  
    - Set the `OPENAI_DRIVER` variable in the `.env` file to either `openai` or `azure-openai`.  
 
-2. **Create an Assistant**  
-   - Run the `create_assistant.py` script to generate an assistant.  
-   - The script outputs an `assistant_id`.  
+2. **Create an Assistant**
+   - Open the flask app container `api-server`
+   - Navigate to the app path inside the container `/app`.
+   - Run the `create_assistant.py` script using this command `python create_assistant.py` to create the assistant.  
+   - The script will output the assistant object with `assistant_id`.  
 
 3. **Update Configuration**  
    - Set `OPENAI_ASSISTANT_ID` in the `.env` file using the generated `assistant_id`.  
@@ -176,7 +178,7 @@ The `docker-compose.yaml` file includes the following services:
 To stop all running containers, use:
 
 ```sh
-docker-compose down
+docker compose down
 ```
 
 This will shut down all services and remove associated containers.
@@ -199,6 +201,8 @@ There are two deployment options:
 9. Note: All K8S resources will be created under namespace `chatbot-dev`, you can manage it from the .yaml files in the `deployment/standalone` folder.
 
 ### High Availability Deployment
+The high availability setup utilize bitnami Helm charts for building a reliable Redis and Mongo DB clusters, also handling the HPA on the frontend and api apps.
+
 
 ## Enhancements
-will add it later
+- Automate assistant creation process in project setup.

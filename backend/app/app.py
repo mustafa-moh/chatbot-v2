@@ -4,7 +4,7 @@ from app.models import save_chat_log
 from app.services.assistant_service import AssistantService
 from app.services.factories.ai_factory import AIFactory
 from app.services.factories.search_factory import SearchFactory
-from app.utils.session_manager import get_session_id, get_session_thread, get_current_session_id, set_session_thread
+from app.utils.session_manager import get_session_id, get_current_session_id
 from config import Config
 from flask_cors import CORS
 

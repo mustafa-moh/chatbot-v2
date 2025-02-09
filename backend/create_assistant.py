@@ -2,13 +2,14 @@ from openai import AzureOpenAI
 from openai import OpenAI
 from config import Config
 
-# client = AzureOpenAI(
-#     api_key=Config.AZURE_OPENAI_API_KEY,
-#     api_version="2024-07-01-preview",
-#     azure_endpoint=Config.AZURE_OPENAI_ENDPOINT
-# )
-
-client = OpenAI(api_key=Config.OPENAI_API_KEY)
+if Config.OPENAI_DRIVER == "azure-openai":
+    client = AzureOpenAI(
+        api_key=Config.AZURE_OPENAI_API_KEY,
+        api_version="2024-07-01-preview",
+        azure_endpoint=Config.AZURE_OPENAI_ENDPOINT
+    )
+else:
+    client = OpenAI(api_key=Config.OPENAI_API_KEY)
 
 assistant = client.beta.assistants.create(
     name="Chatbot Assistant",
