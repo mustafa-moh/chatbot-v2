@@ -1,6 +1,7 @@
 # Chatbot Application using Assistant API
 
 ## Index
+
 1. [Description](#description)
 2. [Architecture](#architecture)
 3. [Assistant API Workflow](#assistant-api-workflow)
@@ -10,15 +11,22 @@
 7. [Local Installation Using Docker Compose](#local-installation-using-docker-compose)
 8. [Stopping the Application](#stopping-the-application)
 9. [Deployment](#deployment)
-   1. [Standalone Deployment](#standalone-deployment)
-   2. [High Availability Deployment](#high-availability-deployment)
+    1. [Standalone Deployment](#standalone-deployment)
+    2. [High Availability Deployment](#high-availability-deployment)
 10. [Enhancements](#enhancements)
 
 ## Description
-This project is a chatbot application utilizing the assistant feature provided by OpenAI using either **OpenAI's platform** ([docs](https://platform.openai.com/docs/assistants/overview)) or **Azure OpenAI** ([docs](https://learn.microsoft.com/en-us/azure/ai-services/openai/how-to/assistant)). The chatbot uses the Assistant API with **function calling** capabilities to enable basic chat functionality. If the bot cannot answer a user’s query, it searches the internet for relevant information.
+
+This project is a chatbot application utilizing the assistant feature provided by OpenAI using either **OpenAI's
+platform** ([docs](https://platform.openai.com/docs/assistants/overview)) or **Azure OpenAI
+** ([docs](https://learn.microsoft.com/en-us/azure/ai-services/openai/how-to/assistant)). The chatbot uses the Assistant
+API with **function calling** capabilities to enable basic chat functionality. If the bot cannot answer a user’s query,
+it searches the internet for relevant information.
 
 ## Architecture
+
 The application consists of the following components:
+
 - **Application Server**: Flask API using Python
 - **Frontend**: React.js with Material UI
 - **Session Management**: Redis
@@ -35,8 +43,11 @@ graph TD;
     Backend -->|Sends response| Frontend;
     Frontend -->|Displays response| User;
 ```
+
 ## Assistant API Workflow
-This section outlines the interaction workflow between the Assistant API and the application service, detailing how the application server manages remote function calls through the Assistant API.
+
+This section outlines the interaction workflow between the Assistant API and the application service, detailing how the
+application server manages remote function calls through the Assistant API.
 
 ```mermaid
 sequenceDiagram
@@ -79,6 +90,7 @@ sequenceDiagram
 ```
 
 ## Technologies Used
+
 - Python (Flask)
 - React.js (Material UI)
 - Redis (Session Management)
@@ -86,26 +98,26 @@ sequenceDiagram
 - OpenAI Assistant API
 - Google Search API
 
-## Configuration and Prerequisites  
+## Configuration and Prerequisites
 
-Before setting up the application, ensure you have the following:  
+Before setting up the application, ensure you have the following:
 
-1. **Select an AI Driver**  
-   - Decide whether to use OpenAI directly or Azure OpenAI.  
-   - Set the `OPENAI_DRIVER` variable in the `.env` file to either `openai` or `azure-openai`.  
+1. **Select an AI Driver**
+    - Decide whether to use OpenAI directly or Azure OpenAI.
+    - Set the `OPENAI_DRIVER` variable in the `.env` file to either `openai` or `azure-openai`.
 
 2. **Create an Assistant**
-   - Open the flask app container `api-server`
-   - Navigate to the app path inside the container `/app`.
-   - Run the `create_assistant.py` script using this command `python create_assistant.py` to create the assistant.  
-   - The script will output the assistant object with `assistant_id`.  
+    - Open the flask app container `api-server`
+    - Navigate to the app path inside the container `/app`.
+    - Run the `create_assistant.py` script using this command `python create_assistant.py` to create the assistant.
+    - The script will output the assistant object with `assistant_id`.
 
-3. **Update Configuration**  
-   - Set `OPENAI_ASSISTANT_ID` in the `.env` file using the generated `assistant_id`.  
+3. **Update Configuration**
+    - Set `OPENAI_ASSISTANT_ID` in the `.env` file using the generated `assistant_id`.
 
 4. **Environment Variables**
-   - All environment variables located on `.env.example`
-   - Ensure the required API keys are configured in `.env` before start the application:  
+    - All environment variables located on `.env.example`
+    - Ensure the required API keys are configured in `.env` before start the application:
 
    ```ini
    # OpenAI driver: 'openai' or 'azure-openai'
@@ -130,9 +142,9 @@ To run this chatbot application locally, follow these steps:
 
 1. Install [Docker](https://www.docker.com/) and [Docker Compose](https://docs.docker.com/compose/install/).
 2. Clone the repository and navigate to the project root.
-3. Create a `.env` file by copying the `.env.example` and configure it with the necessary environment variables. 
+3. Create a `.env` file by copying the `.env.example` and configure it with the necessary environment variables.
 4. Run the following command to start all services:
-   
+
    ```sh
    docker compose up --build
    ```
@@ -143,35 +155,35 @@ This will start all necessary services defined in the `docker-compose.yaml` file
 
 The `docker-compose.yaml` file includes the following services:
 
-- **API Server (`api-server`)**: 
-  - Runs the Flask-based chatbot backend.
-  - Mounts backend code for live updates.
-  - Exposes port `5000`.
-  - Connects to MongoDB and Redis.
+- **API Server (`api-server`)**:
+    - Runs the Flask-based chatbot backend.
+    - Mounts backend code for live updates.
+    - Exposes port `5000`.
+    - Connects to MongoDB and Redis.
 
-- **Frontend (`front-app`)**: 
-  - Runs the React.js front-end application.
-  - Exposes port `3000`.
+- **Frontend (`front-app`)**:
+    - Runs the React.js front-end application.
+    - Exposes port `3000`.
 
-- **MongoDB (`mongo`)**: 
-  - Provides persistent storage for chat logs.
-  - Exposes port `27017`.
-  - Uses a named volume for data persistence.
+- **MongoDB (`mongo`)**:
+    - Provides persistent storage for chat logs.
+    - Exposes port `27017`.
+    - Uses a named volume for data persistence.
 
-- **Mongo Express (`mongo-admin`)**: 
-  - Web-based admin interface for MongoDB.
-  - Exposes port `8081`.
-  - Depends on the MongoDB service.
+- **Mongo Express (`mongo-admin`)**:
+    - Web-based admin interface for MongoDB.
+    - Exposes port `8081`.
+    - Depends on the MongoDB service.
 
-- **Redis (`redis`)**: 
-  - Caches session-based chat history.
-  - Exposes port `6379`.
-  - Uses a named volume for data persistence.
+- **Redis (`redis`)**:
+    - Caches session-based chat history.
+    - Exposes port `6379`.
+    - Uses a named volume for data persistence.
 
-- **Redis Insight (`redis-insight`)**: 
-  - Web-based GUI tool for Redis management.
-  - Exposes port `5540`.
-  - Depends on Redis.
+- **Redis Insight (`redis-insight`)**:
+    - Web-based GUI tool for Redis management.
+    - Exposes port `5540`.
+    - Depends on Redis.
 
 ### Stopping the Application
 
@@ -183,26 +195,53 @@ docker compose down
 
 This will shut down all services and remove associated containers.
 
-
 ## Deployment
-There are two deployment options: 
+
+There are two deployment options:
+
 - **Standalone deployment:** suitable for small environments like development and staging.
 - **High-availability deployment:** which should be used for production.
 
 ### Standalone Deployment
+
 1. Navigate to `deployment/standalone`
-2. Build Frontend: Run `./build-front.sh dev` to build and push the frontend-app image to AWS ECR. You can modify the command to use any container registry of your choice.
-3. Build Backend: Run `./build-backend.sh dev` to build and push the frontend-app image to AWS ECR. You can modify the command to use any container registry of your choice.
-4. Update the placeholder `{app-image-uri}` in `app-deplyment.yaml`, and `frontend-deployment.yaml` with image uri and tag created on the prev steps for both apps. here is an example of image uri with tag of the frontend app `{aws-account-id}.dkr.ecr.us-east-1.amazonaws.com/chatbot/frontend:latest`
-5. Crete the kubernetes cluster if not exist. or use the following command to create K8S cluster on AWS with the auto mode `eksctl create cluster --name=chatbot --enable-auto-mode`
+2. Build Frontend: Run `./build-front.sh dev` to build and push the frontend-app image to AWS ECR. You can modify the
+   command to use any container registry of your choice.
+3. Build Backend: Run `./build-backend.sh dev` to build and push the frontend-app image to AWS ECR. You can modify the
+   command to use any container registry of your choice.
+4. Update the placeholder `{app-image-uri}` in `app-deplyment.yaml`, and `frontend-deployment.yaml` with image uri and
+   tag created on the prev steps for both apps. here is an example of image uri with tag of the frontend app
+   `{aws-account-id}.dkr.ecr.us-east-1.amazonaws.com/chatbot/frontend:latest`
+5. Crete the kubernetes cluster if not exist. or use the following command to create K8S cluster on AWS with the auto
+   mode `eksctl create cluster --name=chatbot --enable-auto-mode`
 6. Review the secrets in the `secrets.yaml` and update all placeholders with actual env variables.
 7. Run `./deploy.sh` command to start provision all required resources.
 8. Finally get available service urls using `kubectl get services -n chatbot-dev`
-9. Note: All K8S resources will be created under namespace `chatbot-dev`, you can manage it from the .yaml files in the `deployment/standalone` folder.
+9. Note: All K8S resources will be created under namespace `chatbot-dev`, you can manage it from the .yaml files in the
+   `deployment/standalone` folder.
 
 ### High Availability Deployment
-The high availability setup utilize bitnami Helm charts for building a reliable Redis and Mongo DB clusters, also handling the HPA on the frontend and api apps.
 
+The high availability setup utilize bitnami Helm charts for building a reliable Redis and Mongo DB clusters, also
+handling the HPA on the frontend and api apps.
+
+1. Navigate to `deployment/high-availability`
+2. Build Frontend: Run `./build-front.sh dev` to build and push the frontend-app image to AWS ECR. You can modify the
+   command to use any container registry of your choice.
+3. Build Backend: Run `./build-backend.sh dev` to build and push the frontend-app image to AWS ECR. You can modify the
+   command to use any container registry of your choice.
+4. Update the placeholder `{app-image-uri}` in `app-deplyment.yaml`, and `frontend-deployment.yaml` with image uri and
+   tag created on the prev steps for both apps. here is an example of image uri with tag of the frontend app
+   `{aws-account-id}.dkr.ecr.us-east-1.amazonaws.com/chatbot/frontend:latest`
+5. Crete the kubernetes cluster if not exist. or use the following command to create K8S cluster on AWS with the auto
+   mode `eksctl create cluster --name=chatbot --enable-auto-mode`
+6. Review the secrets in the `secrets.yaml` and update all placeholders with actual env variables.
+7. Run `./deploy.sh` command to start provision all required resources.
+8. Finally get available service urls using `kubectl get services -n chatbot-prod`
+9. Note: All K8S resources will be created under namespace `chatbot-prod`, you can manage it from the .yaml files in the
+   `deployment/high-availability` folder.
 
 ## Enhancements
+
 - Automate assistant creation process in project setup.
+- Create custom Helm chart for ha setup.
