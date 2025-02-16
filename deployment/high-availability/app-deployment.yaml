@@ -4,7 +4,7 @@ metadata:
   name: chatbot-app
   namespace: chatbot-prod
 spec:
-  replicas: 3
+  replicas: 2
   strategy:
     type: RollingUpdate
     rollingUpdate:
@@ -28,8 +28,8 @@ spec:
             cpu: 500m
             memory: 512Mi
           limits:
-            cpu: 2
-            memory: 2Gi
+            cpu: 1
+            memory: 1Gi
         envFrom:
         - secretRef:
             name: app-secrets

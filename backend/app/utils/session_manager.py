@@ -2,13 +2,13 @@ from config import Config
 from flask import request
 import redis
 import uuid
+from redis.sentinel import Sentinel
 
-redis_client = redis.from_url(Config.REDIS_URL)
-
-
-def update_session(session_id, data):
-    redis_client.hmset(session_id, data)
-
+if Config.REDIS_DRIVER == "sentinel":
+    sentinel = Sentinel([(Config.REDIS_SENTINEL_HOST, 26379)], socket_timeout=0.1)
+    redis_client = sentinel.master_for('mymaster', socket_timeout=0.1)
+else:
+    redis_client = redis.from_url(Config.REDIS_URL)
 
 def get_session_id(request):
     data = request.json

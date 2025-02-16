@@ -6,8 +6,10 @@ services:
     volumes:
       - ./backend:/app  # Mount the backend code for live updates
     environment:
-      - MONGO_URI=mongodb://mongo:27017/ai_assistant
-      - REDIS_URL=redis://redis:6379/0
+      - MONGO_URI=${MONGO_URI}
+      - REDIS_DRIVER=${REDIS_DRIVER}
+      - REDIS_URL=${REDIS_URL}
+      - REDIS_SENTINEL_HOST=${REDIS_SENTINEL_HOST}
       - AZURE_OPENAI_ENDPOINT=${AZURE_OPENAI_ENDPOINT}
       - AZURE_OPENAI_API_KEY=${AZURE_OPENAI_API_KEY}
       - GOOGLE_SEARCH_API_KEY=${GOOGLE_SEARCH_API_KEY}

@@ -16,3 +16,5 @@ class Config:
     OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
     OPENAI_TERMINATE_STATUS = ["completed", "cancelled", "expired", "failed"]
     REQUIRE_ACTION_STATUS = "requires_action"
+    REDIS_DRIVER = os.getenv("REDIS_DRIVER")
+    REDIS_SENTINEL_HOST = os.getenv("REDIS_SENTINEL_HOST")
